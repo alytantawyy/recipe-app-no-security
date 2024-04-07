@@ -52,10 +52,10 @@ public class UserController {
     }
 
 
-    @PutMapping("path/{id}")
-    public User updateUser(@RequestBody User user, @PathVariable Long id) throws Exception{
+    @PutMapping("users/{userId}")
+    public User updateUser(@RequestBody User user, @PathVariable Long userId) throws Exception{
 
-        User updatedUser = userService.updateUser(user, id);
+        User updatedUser = userService.updateUser(user, userId);
 
         return updatedUser;
 
