@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zosh.recipesharingyoutube.model.User;
-import com.zosh.recipesharingyoutube.repository.UserRepository;
+import com.zosh.recipesharingyoutube.service.UserService;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -20,25 +22,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
+
 
     @PostMapping("/users")
     public User createUser(@RequestBody User user) throws Exception{
 
-        User isExist = userRepository.findByEmail(user.getEmail());
-        if(isExist!=null){
-            throw new Exception ("user exists with this email: " + user.getEmail());
-        }
+        User createdUser = userService.createUser(user);
 
-        User savedUser = userRepository.save(user);
-
-        return savedUser;
+        return createdUser;
+       
     }
 
     @GetMapping("/users")
     public List<User> getAllUsers() throws Exception{
 
-        List <User> users = userRepository.findAll();
+        List <User> users = userService.getAllUsers();
 
         return users;
     }
@@ -47,10 +46,19 @@ public class UserController {
     @DeleteMapping("/users/{userId}")
      public String deleteUser(@PathVariable Long userId) throws Exception{
 
-        userRepository.deleteById(userId);
+        userService.deleteUser(userId);
 
         return "User deleted successfully";
     }
 
+
+    @PutMapping("path/{id}")
+    public User updateUser(@RequestBody User user, @PathVariable Long id) throws Exception{
+
+        User updatedUser = userService.updateUser(user, id);
+
+        return updatedUser;
+
+    }
     
 }
