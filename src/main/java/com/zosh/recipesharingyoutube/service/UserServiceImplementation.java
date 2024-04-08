@@ -21,7 +21,7 @@ public class UserServiceImplementation implements UserService{
         if(opt.isPresent()){
             return opt.get();
         }
-        throw new Exception("user not found with id " + Id);
+        throw new Exception("user not found with id: " + Id);
     }
 
     @Override
