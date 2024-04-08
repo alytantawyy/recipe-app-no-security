@@ -14,18 +14,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
 
 
 
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
 
-    @PostMapping("/users")
+    @PostMapping()
     public User createUser(@RequestBody User user) throws Exception{
 
         User createdUser = userService.createUser(user);
@@ -34,7 +38,7 @@ public class UserController {
        
     }
 
-    @GetMapping("/users")
+    @GetMapping()
     public List<User> getAllUsers() throws Exception{
 
         List <User> users = userService.getAllUsers();
@@ -43,7 +47,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/{userId}")
      public String deleteUser(@PathVariable Long userId) throws Exception{
 
         userService.deleteUser(userId);
@@ -52,7 +56,7 @@ public class UserController {
     }
 
 
-    @PutMapping("users/{userId}")
+    @PutMapping("/{userId}")
     public User updateUser(@RequestBody User user, @PathVariable Long userId) throws Exception{
 
         User updatedUser = userService.updateUser(user, userId);
